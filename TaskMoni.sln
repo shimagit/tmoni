@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TaskMoni", "TaskMoni.vbproj", "{A3D1B038-FB63-4F1E-B7D1-D9E0C8B2FA1B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A3D1B038-FB63-4F1E-B7D1-D9E0C8B2FA1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3D1B038-FB63-4F1E-B7D1-D9E0C8B2FA1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3D1B038-FB63-4F1E-B7D1-D9E0C8B2FA1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3D1B038-FB63-4F1E-B7D1-D9E0C8B2FA1B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AC0B0559-B990-421B-87A4-4BFC9F705DB3}
+	EndGlobalSection
+EndGlobal
