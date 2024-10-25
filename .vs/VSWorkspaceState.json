@@ -1,6 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "\\obj\\Debug",
+    "\\obj\\Debug\\net8.0-windows",
+    "\\obj\\Debug\\net8.0-windows\\ref",
+    "\\obj\\Debug\\net8.0-windows\\refint",
+    "\\obj\\Debug\\net8.0-windows\\TempPE",
+    "\\obj\\Release",
+    "\\obj\\Release\\net8.0-windows"
   ],
   "PreviewInSolutionExplorer": false
 }

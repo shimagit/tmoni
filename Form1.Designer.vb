@@ -1031,7 +1031,7 @@ Partial Class Form1
         ' Label21
         ' 
         Label21.AutoSize = True
-        Label21.Font = New Font("ＭＳ ゴシック", 24.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(128))
+        Label21.Font = New Font("ＭＳ ゴシック", 24F, FontStyle.Bold, GraphicsUnit.Point, CByte(128))
         Label21.ImageAlign = ContentAlignment.TopLeft
         Label21.Location = New Point(12, 9)
         Label21.Name = "Label21"
@@ -1042,7 +1042,7 @@ Partial Class Form1
         ' Label22
         ' 
         Label22.AutoSize = True
-        Label22.Font = New Font("ＭＳ ゴシック", 24.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(128))
+        Label22.Font = New Font("ＭＳ ゴシック", 24F, FontStyle.Bold, GraphicsUnit.Point, CByte(128))
         Label22.Location = New Point(12, 369)
         Label22.Name = "Label22"
         Label22.Size = New Size(149, 33)
@@ -1052,7 +1052,7 @@ Partial Class Form1
         ' Label23
         ' 
         Label23.AutoSize = True
-        Label23.Font = New Font("ＭＳ ゴシック", 24.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(128))
+        Label23.Font = New Font("ＭＳ ゴシック", 24F, FontStyle.Bold, GraphicsUnit.Point, CByte(128))
         Label23.Location = New Point(680, 116)
         Label23.Name = "Label23"
         Label23.Size = New Size(81, 33)
@@ -1070,7 +1070,7 @@ Partial Class Form1
         ' 
         ' Form1
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         AutoScroll = True
         AutoScrollMargin = New Size(0, 100)

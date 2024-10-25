@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\pc181-1\\source\\repos\\TaskMoni\\TaskMoni.vbproj": {}
+    "C:\\Users\\pc181-1\\source\\repos\\tmoni\\TaskMoni.vbproj": {}
   },
   "projects": {
-    "C:\\Users\\pc181-1\\source\\repos\\TaskMoni\\TaskMoni.vbproj": {
+    "C:\\Users\\pc181-1\\source\\repos\\tmoni\\TaskMoni.vbproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pc181-1\\source\\repos\\TaskMoni\\TaskMoni.vbproj",
+        "projectUniqueName": "C:\\Users\\pc181-1\\source\\repos\\tmoni\\TaskMoni.vbproj",
         "projectName": "TaskMoni",
-        "projectPath": "C:\\Users\\pc181-1\\source\\repos\\TaskMoni\\TaskMoni.vbproj",
+        "projectPath": "C:\\Users\\pc181-1\\source\\repos\\tmoni\\TaskMoni.vbproj",
         "packagesPath": "C:\\Users\\pc181-1\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pc181-1\\source\\repos\\TaskMoni\\obj\\",
+        "outputPath": "C:\\Users\\pc181-1\\source\\repos\\tmoni\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pc181-1\\AppData\\Roaming\\NuGet\\NuGet.Config",

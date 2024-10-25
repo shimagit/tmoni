@@ -6,6 +6,7 @@ Imports VB = Microsoft.VisualBasic
 Imports System.Text
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports System.Resources
 
 
 
@@ -1141,6 +1142,25 @@ Public Class Form1
         Me.Controls.AddRange(Me.lblTimeAveHour18)
         Me.ResumeLayout(False)
 
+        Timer1.Interval = 1000
+        Timer2.Interval = 2500
+        Timer3.Interval = 2500
+        Timer4.Interval = 2500
+        Timer5.Interval = 2500
+        Timer6.Interval = 2500
+        Timer7.Interval = 2500
+        Timer8.Interval = 2500
+        Timer9.Interval = 2500
+        Timer10.Interval = 2500
+        Timer11.Interval = 2500
+        Timer12.Interval = 2500
+        Timer13.Interval = 1250
+        Timer14.Interval = 1250
+        Timer15.Interval = 1250
+        Timer16.Interval = 1250
+        Timer17.Interval = 1250
+        Timer18.Interval = 1250
+
         'ボタンコントロール配列の作成（５個）
         'Me.testButtons = New System.Windows.Forms.Button(4) {}
         'ボタンコントロールのインスタンスを作成し、プロパティを設定する
@@ -1189,112 +1209,17 @@ Public Class Form1
         Dim cWriter As New System.IO.StreamWriter("c:\takto\Parameta.txt", False, System.Text.Encoding.Default)
         Dim stResult1 As String = String.Empty
         Dim stResult2 As String = String.Empty
-        stResult1 = str(ParaAim(0))
-        For i As Integer = 1 To ParaAim.length - 1
-            stResult1 += "," + str(ParaAim(i))
+        stResult1 = Str(ParaAim(0))
+        For i As Integer = 1 To ParaAim.Length - 1
+            stResult1 += "," + Str(ParaAim(i))
         Next
-        stResult2 = str(ParaMulti(0))
-        For i As Integer = 1 To ParaMulti.length - 1
-            stResult2 += "," + str(ParaMulti(i))
+        stResult2 = Str(ParaMulti(0))
+        For i As Integer = 1 To ParaMulti.Length - 1
+            stResult2 += "," + Str(ParaMulti(i))
         Next
         cWriter.WriteLine(stResult1)
         cWriter.WriteLine(stResult2)
-        cWriter.close()
-    End Sub
-
-    Private Sub Hist()
-        If stk(0).Count < 30 Then Exit Sub
-        Dim arry = stk(0).ToArray
-
-        Dim His(20) As Integer
-        For i As Integer = 0 To 29
-            For j As Integer = 1 To 20
-                If 1.1 + 0.01 * j > Single.Parse(arry(i)) Then
-                    His(j) += 1
-                    Exit For
-                ElseIf j = 20 Then
-                    His(j) += 1
-                End If
-            Next
-        Next
-        PicHist.Width = 400
-        PicHist.Height = 240
-        Dim currentContext As BufferedGraphicsContext
-        Dim myBuffer As BufferedGraphics
-        currentContext = BufferedGraphicsManager.Current
-        myBuffer = currentContext.Allocate(PicHist.CreateGraphics(), New Rectangle(0, 0, 603, 295))
-        Dim g As Graphics = myBuffer.Graphics
-
-        Dim Rx As Single = CSng(PicHist.Size.Width / 1000)
-        Dim Ry As Single = CSng(PicHist.Size.Height / 1000)
-        Dim Pen1 As Pen = New Pen(Color.Black, 1)
-        g.Clear(Color.White)
-        '外枠
-        g.DrawRectangle(Pen1, 0, 0, Rx * 1000 - 1, Ry * 1000 - 1)
-        g.DrawRectangle(Pen1, Rx * 100, Ry * 100, Rx * 800, Ry * 800)
-        'X軸分割線
-        For i As Integer = 1 To 19
-            Dim x1 As Single = Rx * 100 + (Rx * 800 / 20) * i
-            g.DrawLine(Pen1, x1, Ry * 870, x1, Ry * 900)
-        Next
-        'X軸分割数値を表示
-        Dim ds As String = "abc"
-        Dim df As New Font("ＭＳゴシック", 8)
-        Dim db As New SolidBrush(Color.Black)
-        g.DrawString("1.10", df, db, Rx * 70, Ry * 910)
-        g.DrawString("1.15", df, db, Rx * 270, Ry * 910)
-        g.DrawString("1.20", df, db, Rx * 470, Ry * 910)
-        g.DrawString("1.25", df, db, Rx * 670, Ry * 910)
-        g.DrawString("1.30", df, db, Rx * 870, Ry * 910)
-        g.DrawString("[Sec]", df, db, Rx * 925, Ry * 935)
-        '一番大きいセグメントを調べる
-        Dim HistMax As Integer = His.Max()
-        'Y軸の分割数を決める
-        Dim tmp0 As Single = 0
-        Dim tmp1 As Single = 0
-        Dim tmp2 As Single = 0
-        tmp1 = CSng(HistMax / 30)
-        Dim YaxisUpper As Integer = 0
-        If tmp1 > 0.8 Then
-            YaxisUpper = 100
-        ElseIf tmp1 > 0.6 Then
-            YaxisUpper = 80
-        ElseIf tmp1 > 0.4 Then
-            YaxisUpper = 60
-        ElseIf tmp1 > 0.2 Then
-            YaxisUpper = 40
-        Else
-            YaxisUpper = 20
-        End If
-        g.DrawLine(Pen1, Rx * 100, Ry * 300, Rx * 900, Ry * 300)
-        g.DrawLine(Pen1, Rx * 100, Ry * 500, Rx * 900, Ry * 500)
-        g.DrawLine(Pen1, Rx * 100, Ry * 700, Rx * 900, Ry * 700)
-        If YaxisUpper > 90 Then
-            g.DrawString(Str(YaxisUpper), df, db, Rx * 32, Ry * 90)
-        Else
-            g.DrawString(Str(YaxisUpper), df, db, Rx * 50, Ry * 90)
-        End If
-        g.DrawString("[%]", df, db, Rx * 55, Ry * 35)
-        For i As Integer = 1 To 3
-            Dim tmp3 As Single = CSng((YaxisUpper / 4) * i)
-            If tmp3 < 10 Then
-                g.DrawString(Str(Math.Abs(tmp3)), df, db, Rx * 72, Ry * (800 - 200 * i))
-            Else
-                g.DrawString(Str(Math.Abs(tmp3)), df, db, Rx * 50, Ry * (800 - 200 * i))
-            End If
-        Next
-        'ヒストデータ表示
-        Dim Digit As Single = CSng(HistMax * (YaxisUpper / 100))
-        Dim PenH As Pen = New Pen(Color.DarkOliveGreen, Rx * 30)
-        For i As Integer = 1 To 20
-            Dim a1 As Integer = His(i)
-            If His(i) > 0 Then
-                Dim x1 As Single = CSng(100 + (800 / 20) * (i - 1) + 10)
-                g.DrawLine(PenH, Rx * x1, Ry * 899, Rx * x1, Ry * (800 - (His(i) / Digit) * 800 + 99))
-            End If
-        Next
-
-        myBuffer.Render()
+        cWriter.Close()
     End Sub
 
     'ラベルのクリックイベントハンドラ
@@ -1356,8 +1281,10 @@ Public Class Form1
     Public Function DummyTimer(TimerNo As Integer) As String
         counter1(TimerNo) = Environment.TickCount
         Dim i1 As Long = (counter1(TimerNo) - counter2(TimerNo)) / ParaMulti(TimerNo)
-        Dim i2 As Long = r.Next(-100, 100)
-        Dim countDelta As String = (i1 + i2).ToString
+        'Dim i2 As Long = r.Next(-100, 100)
+        Dim i3 As Long = CLng(ParaAim(TimerNo) * 400)
+        Dim i4 As Long = r.Next(-1 * i3, i3)
+        Dim countDelta As String = (i1 + i4).ToString
         Dim countLength As Integer = Len(countDelta)
         If countLength = 3 Then
             DummyTimer = "0." + countDelta
@@ -1377,6 +1304,9 @@ Public Class Form1
             x(i) = ParaAim(i)
         Next
 
+        '範囲外は除外する。
+        If TimeX = "-.---" Then Exit Sub
+        If ParaAim(n) * 0.8 > TimeX Or ParaAim(n) * 1.2 < TimeX Then Exit Sub
 
         lblTimeAim(n).Text = (Math.Round(ParaAim(n), 2)).ToString("0.00")
         lblTimeNow(n).Text = (Math.Round(Val(TimeX), 2)).ToString("0.00")
@@ -1665,5 +1595,6 @@ Public Class Form1
             Next i
         End If
     End Sub
+
 
 End Class
