@@ -1185,6 +1185,23 @@ Public Class Form1
         cReader.Close()
     End Sub
 
+    Private Sub SaveParameta()
+        Dim cWriter As New System.IO.StreamWriter("c:\takto\Parameta.txt", False, System.Text.Encoding.Default)
+        Dim stResult1 As String = String.Empty
+        Dim stResult2 As String = String.Empty
+        stResult1 = str(ParaAim(0))
+        For i As Integer = 1 To ParaAim.length - 1
+            stResult1 += "," + str(ParaAim(i))
+        Next
+        stResult2 = str(ParaMulti(0))
+        For i As Integer = 1 To ParaMulti.length - 1
+            stResult2 += "," + str(ParaMulti(i))
+        Next
+        cWriter.WriteLine(stResult1)
+        cWriter.WriteLine(stResult2)
+        cWriter.close()
+    End Sub
+
     Private Sub Hist()
         If stk(0).Count < 30 Then Exit Sub
         Dim arry = stk(0).ToArray
@@ -1300,7 +1317,7 @@ Public Class Form1
         'MessageBox.Show(ax)
         Dim tmp As String = InputBox(“目標値を入力してください。”, "目標値設定", ParaAim(ax), 0, 0)
         ParaAim(ax) = Val(tmp)
-        'savePara
+        SaveParameta()
     End Sub
 
     Private Sub lblTimeAve_Click(ByVal sender As Object, ByVal e As EventArgs)
