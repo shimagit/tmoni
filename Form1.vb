@@ -8,18 +8,16 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports System.Resources
 
-
-
 Public Class Form1
     '==========================================
     ' 変数の宣言
     '==========================================
     Dim Id As Short                              ' デバイスID
     Dim Ret As Integer                           ' 戻り値
-    Dim szError As New StringBuilder("", 256)       ' エラー文字列
+    Dim szError As New StringBuilder("", 256)    ' エラー文字列
     Dim szText As New String("", 100)
-    Dim UpCount(19) As Short                      ' アップカウンタ
-    Dim DownCount(19) As Short                    ' ダウンカウンタ
+    Dim UpCount(19) As Long                      ' アップカウンタ
+    Dim DownCount(19) As Long                    ' ダウンカウンタ
     Dim Check(19) As CheckBox
     Dim Edit_Down(19) As TextBox
     Dim Edit_Up(19) As TextBox
@@ -154,8 +152,8 @@ Public Class Form1
         '--------------------------------------
         ' エラー処理
         '--------------------------------------
-        Call DioGetErrorString(Ret, szError)
-        Edit_ReturnCode.Text = "DioInit Ret = " & Ret & ":" & szError.ToString()
+        'Call DioGetErrorString(Ret, szError)
+        'Edit_ReturnCode.Text = "DioInit Ret = " & Ret & ":" & szError.ToString()
     End Sub
 
     '---------------------------------------------------------
@@ -170,8 +168,8 @@ Public Class Form1
         '--------------------------------------
         ' エラー処理
         '--------------------------------------
-        Call DioGetErrorString(Ret, szError)
-        Edit_ReturnCode.Text = "DioExit Ret = " & Ret & ":" & szError.ToString()
+        'Call DioGetErrorString(Ret, szError)
+        'Edit_ReturnCode.Text = "DioExit Ret = " & Ret & ":" & szError.ToString()
 
     End Sub
 
@@ -233,8 +231,8 @@ Public Class Form1
         Next BitNo
 
         ' エラー処理
-        Call DioGetErrorString(Ret, szError)
-        Edit_ReturnCode.Text = "Ret = " & Ret & ":" & szError.ToString()
+        'Call DioGetErrorString(Ret, szError)
+        'Edit_ReturnCode.Text = "Ret = " & Ret & ":" & szError.ToString()
     End Sub
     '---------------------------------------------------------
     ' サブルーチン：チェック処理
@@ -259,17 +257,17 @@ Public Class Form1
         'End If
 
         ' エラー処理
-        Call DioGetErrorString(Ret, szError)
-        Edit_ReturnCode.Text = "Ret = " & Ret & ":" & szError.ToString()
+        'Call DioGetErrorString(Ret, szError)
+        'Edit_ReturnCode.Text = "Ret = " & Ret & ":" & szError.ToString()
         Return 0
     End Function
 
     '---------------------------------------------------------
     ' チェック処理
     '---------------------------------------------------------
-    Private Sub _Check_0_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Check_0.CheckedChanged
-        Call CheckProcess(0)
-    End Sub
+    'Private Sub _Check_0_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Check_0.CheckedChanged
+    '   Call CheckProcess(0)
+    'End Sub
 
     '---------------------------------------------------------
     ' サブルーチン：HIWORD,LOWORDを取得する
@@ -528,15 +526,27 @@ Public Class Form1
         'Me.timDummy = New System.Windows.Forms.Timer(NameMc.Length) {}
 
         For j = 0 To 18
-            Me.lblTitle(j) = New System.Windows.Forms.Label
-            Me.lblTitle(j).Name = "lblTitle" + j.ToString
-            Me.lblTitle(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTitle(j).TextAlign = ContentAlignment.MiddleCenter
-            Me.lblTitle(j).Size = New Size(WIDTH_MC, HEIGHT_MC)
-            Me.lblTitle(j).Font = New Font("ＭＳゴシック", 24, FontStyle.Bold, GraphicsUnit.Pixel)
-
-            AddHandler Me.lblTitle(j).Click, AddressOf Me.lblTitle_Click
+            Me.lblTitle(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTitle" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .TextAlign = ContentAlignment.MiddleCenter,
+                .Size = New Size(WIDTH_MC, HEIGHT_MC),
+                .Font = New Font("ＭＳゴシック", 24, FontStyle.Bold, GraphicsUnit.Pixel)
+            }
+            AddHandler Me.lblTitle(j).Click, AddressOf Me.LblTitle_Click
         Next j
+
+        'For j = 0 To 18
+        '    Me.lblTitle(j) = New System.Windows.Forms.Label
+        '    Me.lblTitle(j).Name = "lblTitle" + j.ToString
+        '    Me.lblTitle(j).BorderStyle = BorderStyle.FixedSingle
+        '    Me.lblTitle(j).TextAlign = ContentAlignment.MiddleCenter
+        '    Me.lblTitle(j).Size = New Size(WIDTH_MC, HEIGHT_MC)
+        '    Me.lblTitle(j).Font = New Font("ＭＳゴシック", 24, FontStyle.Bold, GraphicsUnit.Pixel)
+        '    AddHandler Me.lblTitle(j).Click, AddressOf Me.LblTitle_Click
+        'Next j
+
+
         For j = 0 To 2
             Me.lblTitle(0 + j * 6).Text = "装置名"
             Me.lblTitle(0 + j * 6).BackColor = Color.LightBlue
@@ -665,220 +675,239 @@ Public Class Form1
                 Me.lblTimeAvx(j).Location = New Point((j - 6) * WIDTH_MC + 200, 155 + HEIGHT_MC * 5)
             End If
             'イベントハンドラに関連付け
-            AddHandler Me.lblMcNames(j).Click, AddressOf Me.lblMcNames_Click
-            AddHandler Me.lblTimeAim(j).Click, AddressOf Me.lblTimeAim_Click
-            AddHandler Me.lblTimeAve(j).Click, AddressOf Me.lblTimeAve_Click
-            AddHandler Me.lblTimeMin(j).Click, AddressOf Me.lblTimeMin_Click
-            AddHandler Me.lblTimeNow(j).Click, AddressOf Me.lblTimeNow_Click
+            AddHandler Me.lblMcNames(j).Click, AddressOf Me.LblMcNames_Click
+            AddHandler Me.lblTimeAim(j).Click, AddressOf Me.LblTimeAim_Click
+            AddHandler Me.lblTimeAve(j).Click, AddressOf Me.LblTimeAve_Click
+            AddHandler Me.lblTimeMin(j).Click, AddressOf Me.LblTimeMin_Click
+            AddHandler Me.lblTimeNow(j).Click, AddressOf Me.LblTimeNow_Click
         Next
 
         For j = 0 To STACK_AREA - 1
             'インスタンス作成
-            Me.lblTimeStk0(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeStk0(j).Name = "lblTimeStk" + j.ToString 'NameMc(j)
-            Me.lblTimeStk0(j).Text = "" + j.ToString
-            Me.lblTimeStk0(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeStk0(j).Size = New Size(40, 20)
-            Me.lblTimeStk0(j).Location = New Point(40 + 800, 750 + 20 * j)
+            Me.lblTimeStk0(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeStk" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(40 + 800, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk0(j).Click, AddressOf Me.lblTimeStk0_Click
 
             'インスタンス作成
-            Me.lblTimeStk1(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeStk1(j).Name = "lblTimeStk" + j.ToString 'NameMc(j)
-            Me.lblTimeStk1(j).Text = "" + j.ToString
-            Me.lblTimeStk1(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeStk1(j).Size = New Size(40, 20)
-            Me.lblTimeStk1(j).Location = New Point(80 + 800, 750 + 20 * j)
+            Me.lblTimeStk1(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeStk" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(80 + 800, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk1(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeStk2(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeStk2(j).Name = "lblTimeStk" + j.ToString 'NameMc(j)
-            Me.lblTimeStk2(j).Text = "" + j.ToString
-            Me.lblTimeStk2(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeStk2(j).Size = New Size(40, 20)
-            Me.lblTimeStk2(j).Location = New Point(120 + 800, 750 + 20 * j)
+            Me.lblTimeStk2(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeStk" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(120 + 800, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk2(j).Click, AddressOf Me.lblTimeStk2_Click
 
             'インスタンス作成
-            Me.lblTimeStk3(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeStk3(j).Name = "lblTimeStk" + j.ToString 'NameMc(j)
-            Me.lblTimeStk3(j).Text = "" + j.ToString
-            Me.lblTimeStk3(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeStk3(j).Size = New Size(40, 20)
-            Me.lblTimeStk3(j).Location = New Point(160 + 800, 750 + 20 * j)
+            Me.lblTimeStk3(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeStk" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(160 + 800, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk3(j).Click, AddressOf Me.lblTimeStk3_Click
 
             'インスタンス作成
-            Me.lblTimeStk4(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeStk4(j).Name = "lblTimeStk" + j.ToString 'NameMc(j)
-            Me.lblTimeStk4(j).Text = "" + j.ToString
-            Me.lblTimeStk4(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeStk4(j).Size = New Size(40, 20)
-            Me.lblTimeStk4(j).Location = New Point(200 + 800, 750 + 20 * j)
+            Me.lblTimeStk4(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeStk" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(200 + 800, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk4(j).Click, AddressOf Me.lblTimeStk4_Click
 
             'インスタンス作成
-            Me.lblTimeStk5(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeStk5(j).Name = "lblTimeStk" + j.ToString 'NameMc(j)
-            Me.lblTimeStk5(j).Text = "" + j.ToString
-            Me.lblTimeStk5(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeStk5(j).Size = New Size(40, 20)
-            Me.lblTimeStk5(j).Location = New Point(240 + 800, 750 + 20 * j)
+            Me.lblTimeStk5(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeStk" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(240 + 800, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk5(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeStk6(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeStk6(j).Name = "lblTimeStk" + j.ToString 'NameMc(j)
-            Me.lblTimeStk6(j).Text = "" + j.ToString
-            Me.lblTimeStk6(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeStk6(j).Size = New Size(40, 20)
-            Me.lblTimeStk6(j).Location = New Point(280 + 800, 750 + 20 * j)
+            Me.lblTimeStk6(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeStk" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(280 + 800, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk6(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeStk7(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeStk7(j).Name = "lblTimeStk" + j.ToString 'NameMc(j)
-            Me.lblTimeStk7(j).Text = "" + j.ToString
-            Me.lblTimeStk7(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeStk7(j).Size = New Size(40, 20)
-            Me.lblTimeStk7(j).Location = New Point(320 + 800, 750 + 20 * j)
+            Me.lblTimeStk7(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeStk" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(320 + 800, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk7(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeStk8(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeStk8(j).Name = "lblTimeStk" + j.ToString 'NameMc(j)
-            Me.lblTimeStk8(j).Text = "" + j.ToString
-            Me.lblTimeStk8(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeStk8(j).Size = New Size(40, 20)
-            Me.lblTimeStk8(j).Location = New Point(360 + 800, 750 + 20 * j)
+            Me.lblTimeStk8(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeStk" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(360 + 800, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk8(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeStk9(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeStk9(j).Name = "lblTimeStk" + j.ToString 'NameMc(j)
-            Me.lblTimeStk9(j).Text = "" + j.ToString
-            Me.lblTimeStk9(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeStk9(j).Size = New Size(40, 20)
-            Me.lblTimeStk9(j).Location = New Point(400 + 800, 750 + 20 * j)
+            Me.lblTimeStk9(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeStk" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(400 + 800, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk9(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeStk10(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeStk10(j).Name = "lblTimeStk" + j.ToString 'NameMc(j)
-            Me.lblTimeStk10(j).Text = "" + j.ToString
-            Me.lblTimeStk10(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeStk10(j).Size = New Size(40, 20)
-            Me.lblTimeStk10(j).Location = New Point(440 + 800, 750 + 20 * j)
+            Me.lblTimeStk10(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeStk" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(440 + 800, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk10(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeStk11(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeStk11(j).Name = "lblTimeStk" + j.ToString 'NameMc(j)
-            Me.lblTimeStk11(j).Text = "" + j.ToString
-            Me.lblTimeStk11(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeStk11(j).Size = New Size(40, 20)
-            Me.lblTimeStk11(j).Location = New Point(480 + 800, 750 + 20 * j)
+            Me.lblTimeStk11(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeStk" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(480 + 800, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk11(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeStk12(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeStk12(j).Name = "lblTimeStk" + j.ToString 'NameMc(j)
-            Me.lblTimeStk12(j).Text = "" + j.ToString
-            Me.lblTimeStk12(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeStk12(j).Size = New Size(40, 20)
-            Me.lblTimeStk12(j).Location = New Point(520 + 800, 750 + 20 * j)
+            Me.lblTimeStk12(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeStk" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(520 + 800, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk12(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeStk13(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeStk13(j).Name = "lblTimeStk" + j.ToString 'NameMc(j)
-            Me.lblTimeStk13(j).Text = "" + j.ToString
-            Me.lblTimeStk13(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeStk13(j).Size = New Size(40, 20)
-            Me.lblTimeStk13(j).Location = New Point(560 + 800, 750 + 20 * j)
+            Me.lblTimeStk13(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeStk" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(560 + 800, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk13(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeStk14(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeStk14(j).Name = "lblTimeStk" + j.ToString 'NameMc(j)
-            Me.lblTimeStk14(j).Text = "" + j.ToString
-            Me.lblTimeStk14(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeStk14(j).Size = New Size(40, 20)
-            Me.lblTimeStk14(j).Location = New Point(600 + 800, 750 + 20 * j)
+            Me.lblTimeStk14(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeStk" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(600 + 800, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk14(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeStk15(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeStk15(j).Name = "lblTimeStk" + j.ToString 'NameMc(j)
-            Me.lblTimeStk15(j).Text = "" + j.ToString
-            Me.lblTimeStk15(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeStk15(j).Size = New Size(40, 20)
-            Me.lblTimeStk15(j).Location = New Point(640 + 800, 750 + 20 * j)
+            Me.lblTimeStk15(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeStk" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(640 + 800, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk15(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeStk16(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeStk16(j).Name = "lblTimeStk" + j.ToString 'NameMc(j)
-            Me.lblTimeStk16(j).Text = "" + j.ToString
-            Me.lblTimeStk16(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeStk16(j).Size = New Size(40, 20)
-            Me.lblTimeStk16(j).Location = New Point(680 + 800, 750 + 20 * j)
+            Me.lblTimeStk16(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeStk" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(680 + 800, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk16(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeStk17(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeStk17(j).Name = "lblTimeStk" + j.ToString 'NameMc(j)
-            Me.lblTimeStk17(j).Text = "" + j.ToString
-            Me.lblTimeStk17(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeStk17(j).Size = New Size(40, 20)
-            Me.lblTimeStk17(j).Location = New Point(720 + 800, 750 + 20 * j)
+            Me.lblTimeStk17(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeStk" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(720 + 800, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk17(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeStk18(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeStk18(j).Name = "lblTimeStk" + j.ToString 'NameMc(j)
-            Me.lblTimeStk18(j).Text = "" + j.ToString
-            Me.lblTimeStk18(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeStk18(j).Size = New Size(40, 20)
-            Me.lblTimeStk18(j).Location = New Point(760 + 800, 750 + 20 * j)
+            Me.lblTimeStk18(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeStk" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(760 + 800, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk18(j).Click, AddressOf Me.lblTimeStk1_Click
         Next
@@ -886,211 +915,230 @@ Public Class Form1
 
         For j = 0 To 23
             'インスタンス作成
-            Me.lblTimeAveHour0(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeAveHour0(j).Name = "lblTimeAveHour" + j.ToString 'NameMc(j)
-            Me.lblTimeAveHour0(j).Text = "" + j.ToString
-            Me.lblTimeAveHour0(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeAveHour0(j).Size = New Size(40, 20)
-            Me.lblTimeAveHour0(j).Location = New Point(40 + 1600, 750 + 20 * j)
+            Me.lblTimeAveHour0(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeAveHour" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(40 + 1600, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk0(j).Click, AddressOf Me.lblTimeStk0_Click
 
             'インスタンス作成
-            Me.lblTimeAveHour1(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeAveHour1(j).Name = "lblTimeAveHour" + j.ToString 'NameMc(j)
-            Me.lblTimeAveHour1(j).Text = "" + j.ToString
-            Me.lblTimeAveHour1(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeAveHour1(j).Size = New Size(40, 20)
-            Me.lblTimeAveHour1(j).Location = New Point(80 + 1600, 750 + 20 * j)
+            Me.lblTimeAveHour1(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeAveHour" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(80 + 1600, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk1(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeAveHour2(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeAveHour2(j).Name = "lblTimeAveHour" + j.ToString 'NameMc(j)
-            Me.lblTimeAveHour2(j).Text = "" + j.ToString
-            Me.lblTimeAveHour2(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeAveHour2(j).Size = New Size(40, 20)
-            Me.lblTimeAveHour2(j).Location = New Point(120 + 1600, 750 + 20 * j)
+            Me.lblTimeAveHour2(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeAveHour" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(120 + 1600, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk2(j).Click, AddressOf Me.lblTimeStk2_Click
 
             'インスタンス作成
-            Me.lblTimeAveHour3(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeAveHour3(j).Name = "lblTimeAveHour" + j.ToString 'NameMc(j)
-            Me.lblTimeAveHour3(j).Text = "" + j.ToString
-            Me.lblTimeAveHour3(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeAveHour3(j).Size = New Size(40, 20)
-            Me.lblTimeAveHour3(j).Location = New Point(160 + 1600, 750 + 20 * j)
+            Me.lblTimeAveHour3(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeAveHour" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(160 + 1600, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk3(j).Click, AddressOf Me.lblTimeStk3_Click
 
             'インスタンス作成
-            Me.lblTimeAveHour4(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeAveHour4(j).Name = "lblTimeAveHour" + j.ToString 'NameMc(j)
-            Me.lblTimeAveHour4(j).Text = "" + j.ToString
-            Me.lblTimeAveHour4(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeAveHour4(j).Size = New Size(40, 20)
-            Me.lblTimeAveHour4(j).Location = New Point(200 + 1600, 750 + 20 * j)
+            Me.lblTimeAveHour4(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeAveHour" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(200 + 1600, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk4(j).Click, AddressOf Me.lblTimeStk4_Click
 
             'インスタンス作成
-            Me.lblTimeAveHour5(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeAveHour5(j).Name = "lblTimeAveHour" + j.ToString 'NameMc(j)
-            Me.lblTimeAveHour5(j).Text = "" + j.ToString
-            Me.lblTimeAveHour5(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeAveHour5(j).Size = New Size(40, 20)
-            Me.lblTimeAveHour5(j).Location = New Point(240 + 1600, 750 + 20 * j)
+            Me.lblTimeAveHour5(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeAveHour" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(240 + 1600, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk5(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeAveHour6(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeAveHour6(j).Name = "lblTimeAveHour" + j.ToString 'NameMc(j)
-            Me.lblTimeAveHour6(j).Text = "" + j.ToString
-            Me.lblTimeAveHour6(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeAveHour6(j).Size = New Size(40, 20)
-            Me.lblTimeAveHour6(j).Location = New Point(280 + 1600, 750 + 20 * j)
+            Me.lblTimeAveHour6(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeAveHour" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(280 + 1600, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk6(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeAveHour7(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeAveHour7(j).Name = "lblTimeAveHour" + j.ToString 'NameMc(j)
-            Me.lblTimeAveHour7(j).Text = "" + j.ToString
-            Me.lblTimeAveHour7(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeAveHour7(j).Size = New Size(40, 20)
-            Me.lblTimeAveHour7(j).Location = New Point(320 + 1600, 750 + 20 * j)
+            Me.lblTimeAveHour7(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeAveHour" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(320 + 1600, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk7(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeAveHour8(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeAveHour8(j).Name = "lblTimeAveHour" + j.ToString 'NameMc(j)
-            Me.lblTimeAveHour8(j).Text = "" + j.ToString
-            Me.lblTimeAveHour8(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeAveHour8(j).Size = New Size(40, 20)
-            Me.lblTimeAveHour8(j).Location = New Point(360 + 1600, 750 + 20 * j)
+            Me.lblTimeAveHour8(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeAveHour" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(360 + 1600, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk8(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeAveHour9(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeAveHour9(j).Name = "lblTimeAveHour" + j.ToString 'NameMc(j)
-            Me.lblTimeAveHour9(j).Text = "" + j.ToString
-            Me.lblTimeAveHour9(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeAveHour9(j).Size = New Size(40, 20)
-            Me.lblTimeAveHour9(j).Location = New Point(400 + 1600, 750 + 20 * j)
+            Me.lblTimeAveHour9(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeAveHour" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(400 + 1600, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk9(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeAveHour10(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeAveHour10(j).Name = "lblTimeAveHour" + j.ToString 'NameMc(j)
-            Me.lblTimeAveHour10(j).Text = "" + j.ToString
-            Me.lblTimeAveHour10(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeAveHour10(j).Size = New Size(40, 20)
-            Me.lblTimeAveHour10(j).Location = New Point(440 + 1600, 750 + 20 * j)
+            Me.lblTimeAveHour10(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeAveHour" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(440 + 1600, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk10(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeAveHour11(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeAveHour11(j).Name = "lblTimeAveHour" + j.ToString 'NameMc(j)
-            Me.lblTimeAveHour11(j).Text = "" + j.ToString
-            Me.lblTimeAveHour11(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeAveHour11(j).Size = New Size(40, 20)
-            Me.lblTimeAveHour11(j).Location = New Point(480 + 1600, 750 + 20 * j)
+            Me.lblTimeAveHour11(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeAveHour" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(480 + 1600, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk11(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeAveHour12(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeAveHour12(j).Name = "lblTimeAveHour" + j.ToString 'NameMc(j)
-            Me.lblTimeAveHour12(j).Text = "" + j.ToString
-            Me.lblTimeAveHour12(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeAveHour12(j).Size = New Size(40, 20)
-            Me.lblTimeAveHour12(j).Location = New Point(520 + 1600, 750 + 20 * j)
+            Me.lblTimeAveHour12(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeAveHour" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(520 + 1600, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk12(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeAveHour13(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeAveHour13(j).Name = "lblTimeAveHour" + j.ToString 'NameMc(j)
-            Me.lblTimeAveHour13(j).Text = "" + j.ToString
-            Me.lblTimeAveHour13(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeAveHour13(j).Size = New Size(40, 20)
-            Me.lblTimeAveHour13(j).Location = New Point(560 + 1600, 750 + 20 * j)
+            Me.lblTimeAveHour13(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeAveHour" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(560 + 1600, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk13(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeAveHour14(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeAveHour14(j).Name = "lblTimeAveHour" + j.ToString 'NameMc(j)
-            Me.lblTimeAveHour14(j).Text = "" + j.ToString
-            Me.lblTimeAveHour14(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeAveHour14(j).Size = New Size(40, 20)
-            Me.lblTimeAveHour14(j).Location = New Point(600 + 1600, 750 + 20 * j)
+            Me.lblTimeAveHour14(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeAveHour" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(600 + 1600, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk14(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeAveHour15(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeAveHour15(j).Name = "lblTimeAveHour" + j.ToString 'NameMc(j)
-            Me.lblTimeAveHour15(j).Text = "" + j.ToString
-            Me.lblTimeAveHour15(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeAveHour15(j).Size = New Size(40, 20)
-            Me.lblTimeAveHour15(j).Location = New Point(640 + 1600, 750 + 20 * j)
+            Me.lblTimeAveHour15(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeAveHour" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(640 + 1600, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk15(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeAveHour16(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeAveHour16(j).Name = "lblTimeAveHour" + j.ToString 'NameMc(j)
-            Me.lblTimeAveHour16(j).Text = "" + j.ToString
-            Me.lblTimeAveHour16(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeAveHour16(j).Size = New Size(40, 20)
-            Me.lblTimeAveHour16(j).Location = New Point(680 + 1600, 750 + 20 * j)
+            Me.lblTimeAveHour16(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeAveHour" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(680 + 1600, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk16(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeAveHour17(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeAveHour17(j).Name = "lblTimeAveHour" + j.ToString 'NameMc(j)
-            Me.lblTimeAveHour17(j).Text = "" + j.ToString
-            Me.lblTimeAveHour17(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeAveHour17(j).Size = New Size(40, 20)
-            Me.lblTimeAveHour17(j).Location = New Point(720 + 1600, 750 + 20 * j)
+            Me.lblTimeAveHour17(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeAveHour" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(720 + 1600, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk17(j).Click, AddressOf Me.lblTimeStk1_Click
 
             'インスタンス作成
-            Me.lblTimeAveHour18(j) = New System.Windows.Forms.Label
             'プロパティ設定
-            Me.lblTimeAveHour18(j).Name = "lblTimeAveHour" + j.ToString 'NameMc(j)
-            Me.lblTimeAveHour18(j).Text = "" + j.ToString
-            Me.lblTimeAveHour18(j).BorderStyle = BorderStyle.FixedSingle
-            Me.lblTimeAveHour18(j).Size = New Size(40, 20)
-            Me.lblTimeAveHour18(j).Location = New Point(760 + 1600, 750 + 20 * j)
+            Me.lblTimeAveHour18(j) = New System.Windows.Forms.Label With {
+                .Name = "lblTimeAveHour" + j.ToString, 'NameMc(j)
+                .Text = "" + j.ToString,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .Size = New Size(40, 20),
+                .Location = New Point(760 + 1600, 750 + 20 * j)
+            }
             'イベントハンドラに関連付け
             'AddHandler Me.lblTimeStk18(j).Click, AddressOf Me.lblTimeStk1_Click
         Next
@@ -1142,24 +1190,24 @@ Public Class Form1
         Me.Controls.AddRange(Me.lblTimeAveHour18)
         Me.ResumeLayout(False)
 
-        Timer1.Interval = 1000
-        Timer2.Interval = 2500
-        Timer3.Interval = 2500
-        Timer4.Interval = 2500
-        Timer5.Interval = 2500
-        Timer6.Interval = 2500
-        Timer7.Interval = 2500
-        Timer8.Interval = 2500
-        Timer9.Interval = 2500
-        Timer10.Interval = 2500
-        Timer11.Interval = 2500
-        Timer12.Interval = 2500
-        Timer13.Interval = 1250
-        Timer14.Interval = 1250
-        Timer15.Interval = 1250
-        Timer16.Interval = 1250
-        Timer17.Interval = 1250
-        Timer18.Interval = 1250
+        Timer1.Interval = 1000 * 1
+        Timer2.Interval = 2500 * 1
+        Timer3.Interval = 2500 * 1
+        Timer4.Interval = 2500 * 3
+        Timer5.Interval = 2500 * 2
+        Timer6.Interval = 2500 * 1
+        Timer7.Interval = 2500 * 1
+        Timer8.Interval = 2500 * 1
+        Timer9.Interval = 2500 * 1
+        Timer10.Interval = 2500 * 3
+        Timer11.Interval = 2500 * 2
+        Timer12.Interval = 2500 * 1
+        Timer13.Interval = 1250 * 12
+        Timer14.Interval = 1250 * 4
+        Timer15.Interval = 1250 * 18
+        Timer16.Interval = 1250 * 3
+        Timer17.Interval = 1250 * 3
+        Timer18.Interval = 1250 * 2
 
         'ボタンコントロール配列の作成（５個）
         'Me.testButtons = New System.Windows.Forms.Button(4) {}
@@ -1186,7 +1234,7 @@ Public Class Form1
 
     Private Sub LoadParameta()
         Dim cReader As New System.IO.StreamReader("c:\takto\Parameta.txt", System.Text.Encoding.Default)
-        Dim stResult As String = String.Empty
+        Dim stResult As String
         While (cReader.Peek() >= 0)
             Dim stBuffer1 As String = cReader.ReadLine()
             Dim z1() As String = Split(stBuffer1, ",")
@@ -1207,8 +1255,8 @@ Public Class Form1
 
     Private Sub SaveParameta()
         Dim cWriter As New System.IO.StreamWriter("c:\takto\Parameta.txt", False, System.Text.Encoding.Default)
-        Dim stResult1 As String = String.Empty
-        Dim stResult2 As String = String.Empty
+        Dim stResult1 As String
+        Dim stResult2 As String
         stResult1 = Str(ParaAim(0))
         For i As Integer = 1 To ParaAim.Length - 1
             stResult1 += "," + Str(ParaAim(i))
@@ -1223,19 +1271,19 @@ Public Class Form1
     End Sub
 
     'ラベルのクリックイベントハンドラ
-    Private Sub lblTitle_Click(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub LblTitle_Click(ByVal sender As Object, ByVal e As EventArgs)
         'クリックされたボタンのnameを表示する
         MessageBox.Show(CType(sender, Label).Name)
     End Sub
 
-    Private Sub lblMcNames_Click(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub LblMcNames_Click(ByVal sender As Object, ByVal e As EventArgs)
         'クリックされたボタンのnameを表示する
         'MessageBox.Show(CType(sender, Label).Name)
         Dim zx As String = InputBox(“入力してください。”, “タイトル”, “”, 0, 0)
         MsgBox(zx)
     End Sub
 
-    Private Sub lblTimeAim_Click(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub LblTimeAim_Click(ByVal sender As Object, ByVal e As EventArgs)
         'クリックされたボタンのnameを表示する
         'MessageBox.Show(CType(sender, System.Windows.Forms.Label).Name)
         Dim ax As String = Val(Replace(CType(sender, System.Windows.Forms.Label).Name, "lblTimeAim", ""))
@@ -1245,7 +1293,7 @@ Public Class Form1
         SaveParameta()
     End Sub
 
-    Private Sub lblTimeAve_Click(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub LblTimeAve_Click(ByVal sender As Object, ByVal e As EventArgs)
         'クリックされたボタンのnameを表示する
         'MessageBox.Show(CType(sender, System.Windows.Forms.Label).Name)
         Dim ax As String = Val(Replace(CType(sender, System.Windows.Forms.Label).Name, "lblTimeAve", ""))
@@ -1253,27 +1301,27 @@ Public Class Form1
         ParaMulti(ax) = Val(tmp)
     End Sub
     '
-    Private Sub lblTimeMin_Click(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub LblTimeMin_Click(ByVal sender As Object, ByVal e As EventArgs)
         'クリックされたボタンのnameを表示する
         MessageBox.Show(CType(sender, System.Windows.Forms.Label).Name)
     End Sub
 
-    Private Sub lblTimeNow_Click(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub LblTimeNow_Click(ByVal sender As Object, ByVal e As EventArgs)
         'クリックされたボタンのnameを表示する
         MessageBox.Show(CType(sender, System.Windows.Forms.Label).Name)
     End Sub
     '
-    Private Sub lblTimeStk0_Click(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub LblTimeStk0_Click(ByVal sender As Object, ByVal e As EventArgs)
         'クリックされたボタンのnameを表示する
         MessageBox.Show(CType(sender, System.Windows.Forms.Label).Name)
     End Sub
     '
-    Private Sub lblTimeStk1_Click(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub LblTimeStk1_Click(ByVal sender As Object, ByVal e As EventArgs)
         'クリックされたボタンのnameを表示する
         MessageBox.Show(CType(sender, System.Windows.Forms.Label).Name)
     End Sub
 
-    Private Sub testButtons_Click(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub TestButtons_Click(ByVal sender As Object, ByVal e As EventArgs)
         'クリックされたボタンのnameを表示する
         MessageBox.Show(CType(sender, System.Windows.Forms.Button).Name)
     End Sub
@@ -1578,7 +1626,7 @@ Public Class Form1
 
             '一日平均表示
             For i As Integer = 0 To 17
-                Dim tmp0 As Single = 0
+                Dim tmp0 As Single
                 Dim tmp1 As Single = Single.Parse(lblTimeAim(i).Text)
                 Dim tmp2 As Single = 0
                 Dim Count As Integer = 0

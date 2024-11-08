@@ -16,7 +16,7 @@ Imports System.Reflection
 <Assembly: System.Reflection.AssemblyCompanyAttribute("TaskMoni"),  _
  Assembly: System.Reflection.AssemblyConfigurationAttribute("Debug"),  _
  Assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0"),  _
- Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2e413e898763901eec03695efc9ec4b36f28afbf"),  _
+ Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7652a81beebd8e1aea7001505f903553ac42b5b0"),  _
  Assembly: System.Reflection.AssemblyProductAttribute("TaskMoni"),  _
  Assembly: System.Reflection.AssemblyTitleAttribute("TaskMoni"),  _
  Assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0"),  _
