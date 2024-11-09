@@ -1342,6 +1342,7 @@ Public Class Form1
             DummyTimer = "-.---"
         End If
         counter2(TimerNo) = counter1(TimerNo)
+
     End Function
 
     Public Sub StackIn(n As Integer)
